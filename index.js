@@ -1,3 +1,4 @@
+// Broiler plate code
 const { Engine, Render, Runner, Bodies, World } = Matter;
 
 // Create an engine
@@ -20,7 +21,15 @@ Render.run(render);
 // Create a runner and run the engine
 Runner.run(Runner.create(), engine);
 
-const shape = Bodies.rectangle(200, 200, 50, 50, {
-  isStatic: true,
-});
-World.add(world, shape);
+//Brolier plate code ends
+
+// Walls
+const walls = [
+  Bodies.rectangle(400, 0, 800, 40, { isStatic: true }),
+  Bodies.rectangle(0, 300, 40, 600, { isStatic: true }),
+  Bodies.rectangle(400, 600, 800, 40, { isStatic: true }),
+  Bodies.rectangle(800, 300, 40, 600, { isStatic: true }),
+];
+
+// Add new shape to the World object
+World.add(world, walls);
