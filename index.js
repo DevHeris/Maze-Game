@@ -2,9 +2,10 @@ const { Engine, Render, Runner, Bodies, World } = Matter;
 const engine = Engine.create();
 const { world } = engine;
 
-const cells = 3;
-const width = 600;
-const height = 600;
+const cells = 15;
+const width = 750;
+const height = 750;
+const unitLength = width / cells;
 
 const render = Render.create({
   element: document.body,
@@ -12,7 +13,7 @@ const render = Render.create({
   options: {
     width,
     height,
-    wireframes: true,
+    wireframes: false,
   },
 });
 Render.run(render);
@@ -98,10 +99,53 @@ const stepThroughCell = (row, column) => {
     } else if (direction === "down") {
       horizontals[row][column] = true;
     }
-
-    console.log(grid, direction, horizontals);
+    // Visit that next cell
+    stepThroughCell(nextRow, nextColumn);
   }
-  // Visit that next cell
 };
 
 stepThroughCell(startRow, startColumn);
+
+// Drawing walls with matter.js
+
+// Horizontal walls
+horizontals.forEach((row, rowIndex) => {
+  row.forEach((openSegment, columnIndex) => {
+    // Open passage way so no wall needed
+    if (openSegment) return;
+
+    // Otherwise
+    const wall = Bodies.rectangle(
+      columnIndex * unitLength + unitLength / 2,
+      rowIndex * unitLength + unitLength,
+      unitLength,
+      5,
+      {
+        render: { fillStyle: "red" },
+        isStatic: true,
+      }
+    );
+
+    World.add(world, wall);
+  });
+});
+
+// Vertical walls
+verticals.forEach((row, rowIndex) => {
+  row.forEach((openSegment, columnIndex) => {
+    if (openSegment) return;
+
+    const wall = Bodies.rectangle(
+      columnIndex * unitLength + unitLength,
+      rowIndex * unitLength + unitLength / 2,
+      5,
+      unitLength,
+      {
+        render: { fillStyle: "red" },
+        isStatic: true,
+      }
+    );
+
+    World.add(world, wall);
+  });
+});
