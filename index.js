@@ -87,10 +87,19 @@ const stepThroughCell = (row, column) => {
     if (grid[nextRow][nextColumn]) {
       continue;
     }
-    console.log(grid, nextColumn, nextRow);
 
     // Remove a wall from either horizontals or verticals
-    console.log(row, column, direction);
+    if (direction === "left") {
+      verticals[row][column - 1] = true;
+    } else if (direction === "right") {
+      verticals[row][column] = true;
+    } else if (direction === "up") {
+      horizontals[row - 1][column] = true;
+    } else if (direction === "down") {
+      horizontals[row][column] = true;
+    }
+
+    console.log(grid, direction, horizontals);
   }
   // Visit that next cell
 };
