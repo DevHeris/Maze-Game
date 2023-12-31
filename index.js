@@ -164,3 +164,22 @@ const goal = Bodies.rectangle(
   }
 );
 World.add(world, goal);
+
+// Ball
+const ball = Bodies.circle(unitLength / 2, unitLength / 2, unitLength / 3);
+World.add(world, ball);
+
+document.addEventListener("keydown", (event) => {
+  if (event.keyCode === 87) {
+    console.log("up");
+  }
+  if (event.keyCode === 68) {
+    console.log("right");
+  }
+  if (event.keyCode === 83) {
+    console.log("down");
+  }
+  if (event.keyCode === 65) {
+    console.log("left");
+  }
+});
