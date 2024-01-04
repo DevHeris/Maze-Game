@@ -3,7 +3,7 @@ const engine = Engine.create();
 const { world } = engine;
 world.gravity.y = 0;
 
-const cells = 3;
+const cells = 10;
 const width = 600;
 const height = 600;
 const unitLength = width / cells;
@@ -20,7 +20,7 @@ const render = Render.create({
 Render.run(render);
 Runner.run(Runner.create(), engine);
 
-// Walls
+// Walls@
 const walls = [
   Bodies.rectangle(width / 2, 0, width, 2, { isStatic: true }),
   Bodies.rectangle(width / 2, height, width, 2, { isStatic: true }),
@@ -124,6 +124,7 @@ horizontals.forEach((row, rowIndex) => {
       {
         render: { fillStyle: "red" },
         isStatic: true,
+        label: "wall",
       }
     );
 
@@ -144,6 +145,7 @@ verticals.forEach((row, rowIndex) => {
       {
         render: { fillStyle: "red" },
         isStatic: true,
+        label: "wall",
       }
     );
 
@@ -198,7 +200,12 @@ Events.on(engine, "collisionStart", (event) => {
       labels.includes(collision.bodyA.label) &&
       labels.includes(collision.bodyB.label)
     ) {
-      console.log("Win");
+      world.gravity.y = 1;
+      world.bodies.forEach((body) => {
+        if (body.label === "wall") {
+          Body.setStatic(body, false);
+        }
+      });
     }
   });
 });
