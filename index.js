@@ -3,8 +3,8 @@ const engine = Engine.create();
 const { world } = engine;
 world.gravity.y = 0;
 
-const cellsHorizontal = 14;
-const cellsVertical = 10;
+const cellsHorizontal = 20;
+const cellsVertical = 2;
 const width = window.innerWidth;
 const height = window.innerHeight;
 
@@ -165,7 +165,7 @@ const goal = Bodies.rectangle(
   {
     isStatic: true,
     render: {
-      fillStyle: "green",
+      fillStyle: "lightgreen",
     },
     label: "goal",
   }
@@ -177,7 +177,7 @@ const ballRadius = Math.min(unitLengthX, unitLengthY) / 4;
 const ball = Bodies.circle(unitLengthX / 2, unitLengthY / 2, ballRadius, {
   label: "ball",
   render: {
-    fillStyle: "blue",
+    fillStyle: "lightblue",
   },
 });
 World.add(world, ball);
@@ -207,6 +207,7 @@ Events.on(engine, "collisionStart", (event) => {
       labels.includes(collision.bodyA.label) &&
       labels.includes(collision.bodyB.label)
     ) {
+      document.querySelector(".winner").classList.remove("hidden");
       world.gravity.y = 1;
       world.bodies.forEach((body) => {
         if (body.label === "wall") {
