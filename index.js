@@ -4,7 +4,7 @@ const { world } = engine;
 world.gravity.y = 0;
 
 const cellsHorizontal = 20;
-const cellsVertical = 2;
+const cellsVertical = 18;
 const width = window.innerWidth;
 const height = window.innerHeight;
 
